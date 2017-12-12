@@ -31,6 +31,16 @@
         height: 100%;
 
         transform-style: preserve-3d;
+        transform: translate3d(-50%, 0, 0);
+        transition: 1.5s transform cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+
+      .book--open {
+        transform: translate3d(0, 0, 0); 
+      }
+
+      .book--open2 {
+        transform: translate3d(50%, 0, 0); 
       }
 
       .page {
@@ -142,11 +152,13 @@
       function toTopPage1(event) {
         $('.page-2').removeClass('page--top');
         $('.page-1').addClass('page--top');
+        $('.book').toggleClass('book--open');
       }
 
       function toTopPage2(event) {
         $('.page-1').removeClass('page--top');
         $('.page-2').addClass('page--top');
+        $('.book').toggleClass('book--open2');
       }
 
       $('.book')
