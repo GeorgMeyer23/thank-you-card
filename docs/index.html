@@ -6,9 +6,158 @@
     <title>thank you card</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: #dfdfdf;
+      }
 
+      img {
+        max-width: 100%;
+      }
+
+      .scene {
+        width: 45%;
+        height: 90%;
+        margin: 5% 5% 5% 50%;
+
+        perspective: 5000px;
+      }
+
+      .book {
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        transform-style: preserve-3d;
+      }
+
+      .page {
+        position: absolute;
+        color: black;
+        width: 100%;
+        height: 100%;
+        
+        cursor: pointer;
+        transition: 1.5s transform cubic-bezier(0.645, 0.045, 0.355, 1);
+        transform-style: preserve-3d;  
+        transform-origin: left center;
+      }
+
+      .page--top {
+        z-index: 2;
+      }
+
+      .page__front,
+      .page__back {
+        position: absolute;
+
+        width: 100%;
+        height: 100%;
+        padding: 10% 5% 5%;
+        box-sizing: border-box;
+
+        backface-visibility: hidden;
+      }
+
+      .page__front:after,
+      .page__back:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom right, transparent, rgba(11, 11, 11, 0.05));
+        pointer-events: none;
+        content: '';
+      }
+
+      .page__back {
+        transform: rotateY(180deg);
+      }
+
+      .page__image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
+
+      .page.active {
+        z-index: 1;
+      }
+
+      .page.flipped {
+        transform: rotateY(-180deg);
+      }
+
+      ./*page.flipped:last-of-type {
+        z-index: 1;
+      }*/
+    </style>
+    <script type="text/javascript" src="assets/jquery.js"></script>
   </head>
   <body>
-    <h1>Batman ist der Schatten der Nacht</h1>
+    <div class="scene">
+      <div class="book">
+        <div class="page page--top active page-1">
+          <div class="page__front">
+            <img class="page__image" src="assets/page_01_front.jpg"/>
+          </div>
+          <div class="page__back">
+            <img class="page__image" src="assets/page_01_back.jpg"/>
+          </div>
+        </div>
+        <div class="page page-2">
+          <div class="page__front">
+            <img class="page__image" src="assets/page_02_front.jpg"/>
+          </div>
+          <div class="page__back">
+            <img class="page__image" src="assets/page_02_back.jpg"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">(function($, window, document) {
+
+      function prevPage() {
+        $('.flipped')
+          .last()
+          .removeClass('flipped')
+          .addClass('active')
+          .siblings('.page')
+          .removeClass('active');
+      }
+
+      function nextPage() {
+        $('.active')
+          .removeClass('active')
+          .addClass('flipped')
+          .next('.page')
+          .addClass('active');
+      }
+
+      function toTopPage1(event) {
+        $('.page-2').removeClass('page--top');
+        $('.page-1').addClass('page--top');
+      }
+
+      function toTopPage2(event) {
+        $('.page-1').removeClass('page--top');
+        $('.page-2').addClass('page--top');
+      }
+
+      $('.book')
+        .on('click', '.active', nextPage)
+        .on('click', '.flipped', prevPage)
+        .on('click', '.page-1', toTopPage1)
+        .on('click', '.page-2', toTopPage2);
+
+      $('.page__image').on('load', function() {
+        $('.scene').height($(this).height() + 'px');
+      });
+
+    })(jQuery, window, document);</script>
   </body>
 </html>
