@@ -92,6 +92,7 @@
         width: 100%;
         height: 100%;
         background: linear-gradient(to bottom right, transparent, rgba(11, 11, 11, 0.05));
+        background: -webkit-linear-gradient(to bottom right, transparent, rgba(11, 11, 11, 0.05));
         pointer-events: none;
         content: '';
       }
@@ -145,7 +146,10 @@
     <p class="center">-- Sabine und Georg 2017 --</p>
     <script type="text/javascript">(function($, window, document) {
 
+      var hit = false;
+
       function prevPage() {
+        hit = true;
         $('.flipped')
           .last()
           .removeClass('flipped')
@@ -155,6 +159,7 @@
       }
 
       function nextPage() {
+        hit = true;
         $('.active')
           .removeClass('active')
           .addClass('flipped')
@@ -163,12 +168,14 @@
       }
 
       function toTopPage1(event) {
+        hit = true;
         $('.page-2').removeClass('page--top');
         $('.page-1').addClass('page--top');
         $('.book').toggleClass('book--open');
       }
 
       function toTopPage2(event) {
+        hit = true;
         $('.page-1').removeClass('page--top');
         $('.page-2').addClass('page--top');
         $('.book').toggleClass('book--open2');
@@ -183,6 +190,13 @@
       $('.page__image').on('load', function() {
         $('.scene').height($(this).height() + 'px');
       });
+
+      window.setTimeout(function() {
+        if (!hit) {
+          nextPage();
+          toTopPage1();
+        }
+      }, 2000)
 
     })(jQuery, window, document);</script>
   </body>
