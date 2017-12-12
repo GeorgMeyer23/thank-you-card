@@ -10,6 +10,7 @@
       html, body {
         margin: 0;
         padding: 0;
+        height: 100%;
         background: #dfdfdf;
       }
 
@@ -18,10 +19,22 @@
       }
 
       .scene {
+        position: relative;
+        top: 40%;
+        left: 50%;
+        transform: translateY(-50%);
         width: 45%;
-        margin: 5% 5% 5% 50%;
 
         perspective: 1500px;
+      }
+
+      p {
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        color: #333;
       }
 
       .book {
@@ -129,6 +142,7 @@
         </div>
       </div>
     </div>
+    <p class="center">-- Sabine und Georg 2017 --</p>
     <script type="text/javascript">(function($, window, document) {
 
       function prevPage() {
